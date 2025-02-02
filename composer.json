@@ -1,0 +1,15 @@
+{
+    "name": "ycode/medico-soft",
+    "autoload": {
+        "psr-4": {
+            "Ycode\\MedicoSoft\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ahmedbenkrarayc",
+            "email": "ahmed.benkrara2@gmail.com"
+        }
+    ],
+    "require": {}
+}
