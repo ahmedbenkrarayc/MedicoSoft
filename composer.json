@@ -2,7 +2,8 @@
     "name": "ycode/medico-soft",
     "autoload": {
         "psr-4": {
-            "Ycode\\MedicoSoft\\": "src/"
+            "App\\": "app/",
+            "Core\\": "core/"
         }
     },
     "authors": [
