@@ -3,7 +3,7 @@
 namespace App\Models;
 use APP\Exceptions\InputException;
 
-abstract class User {
+abstract class User{
     protected $id;
     protected $fname;
     protected $lname;
