@@ -6,36 +6,42 @@ use App\Exceptions\RouteNotFoundException;
 
 class Router{
     private $routes = [];
+    private $middlewares = [];
 
-    public function register($method, $route, $action){
+    public function register($method, $route, $action, $middleware = null){
         $this->routes[$method][$route] = $action;
+        if($middleware){
+            $this->middlewares[$route] = $middleware;
+        }
         return $this;
     }
 
-    public function get($route, $action){
-        return $this->register('get', $route, $action);
+    public function get($route, $action, $middleware = null){
+        return $this->register('get', $route, $action, $middleware);
     }
 
-    public function post($route, $action){
-        return $this->register('post', $route, $action);
+    public function post($route, $action, $middleware = null){
+        return $this->register('post', $route, $action, $middleware);
     }
 
-    public function group($prefix, $callback) {
-        $callback(new class($this, $prefix) {
+    public function group($prefix, $callback, $middleware = null) {
+        $callback(new class($this, $prefix, $middleware) {
             private Router $router;
             private string $prefix;
+            private $middleware;
 
-            public function __construct(Router $router, string $prefix) {
+            public function __construct(Router $router, string $prefix, $middleware) {
                 $this->router = $router;
                 $this->prefix = rtrim($prefix, '/');
+                $this->middleware = $middleware;
             }
 
             public function get(string $route, $action) {
-                return $this->router->get($this->prefix . '/' . ltrim($route, '/'), $action);
+                return $this->router->get($this->prefix . '/' . ltrim($route, '/'), $action, $this->middleware);
             }
 
             public function post(string $route, $action) {
-                return $this->router->post($this->prefix . '/' . ltrim($route, '/'), $action);
+                return $this->router->post($this->prefix . '/' . ltrim($route, '/'), $action, $this->middleware);
             }
         });
 
@@ -45,6 +51,7 @@ class Router{
     public function resolve($requestUri, $method){
         $route = explode('?', $requestUri)[0];
         $action = $this->routes[$method][$route] ?? null;
+        $middleware = $this->middlewares[$route] ?? null;
         $params = [];
         
         if(!$action){
@@ -69,7 +76,10 @@ class Router{
                 throw new RouteNotFoundException();
             }
         }
-            
+        if($middleware){
+            call_user_func([new $middleware, 'handle']);
+        }
+
         if(is_callable($action))
             return call_user_func_array($action, $params);
 
@@ -87,4 +97,15 @@ class Router{
 
         throw new RouteNotFoundException();
     }
+
+    // public function middleware($class){
+    //     if(class_exists($class)){
+    //         $class = new $class();
+
+    //         if(method_exists($class, 'handle')){
+    //             call_user_func([$class, 'handle']);
+    //             return $this;
+    //         }
+    //     }
+    // }
 }
