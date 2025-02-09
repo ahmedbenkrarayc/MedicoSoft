@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp | MedicoSoft</title>
+    <title>Login | MedicoSoft</title>
     <link rel="stylesheet" href="<?= 'http://'.$_SERVER['HTTP_HOST'].'/assets/css/output.css' ?>">
 </head>
 <body>
     <header class="relative">
         <nav class="flex items-center justify-between py-4 sm:px-6 md:px-14">
-            <h1 class="font-semibold cursor-pointer"><?= $_ENV['APP_NAME'] ?></h1>
+            <h1 class="font-semibold cursor-pointer">LawyerConnect</h1>
             <ul class="space-x-4 text-sm sm:hidden md:flex">
-                <li><a href="./index.php">Home</a></li>
-                <li><a href="./index.php#lawyers">Find lawyer</a></li>
+                <li><a href="./../../index.php">Home</a></li>
+                <li><a href="./../../index.php#lawyers">Find lawyer</a></li>
                 <li><a href="#">About</a></li>
                 <?php if(isset($_COOKIE['user_role']) && $_COOKIE['user_role'] == 'client'): ?>
                     <a href="./reservations.php">Reservations</a>
@@ -52,7 +52,7 @@
         <div class="flex min-h-[80vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div class="text-center sm:mx-auto sm:w-full sm:max-w-md">
                 <h1 class="text-3xl font-extrabold text-gray-900">
-                    Sign up
+                    Sign in
                 </h1>
             </div>
             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -68,73 +68,28 @@
                             endif; 
                         ?>
                     </ul>
-
-                    <?php
-                        if(isset($this->params['success']) && $this->params['success'] == true){
-                            header('location: /auth/login');
-                        }
-                    ?>
-                    <form id="register" method="POST" action="/auth/register" class="space-y-6">
-                        <div>
-                            <label for="fname" class="block text-sm font-medium text-gray-700">First Name</label>
-                            <div class="mt-1">
-                                <input id="fname" type="text"
-                                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    name="fname" value="">
-                                <span class="text-red-500 text-xs"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="lname" class="block text-sm font-medium text-gray-700">Last Name</label>
-                            <div class="mt-1">
-                                <input id="lname" type="text"
-                                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    name="lname" required value="">
-                                <span class="text-red-500 text-xs"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                            <div class="mt-1">
-                                <input id="phone" type="text" data-testid="username"
-                                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    name="phone" required value="">
-                                <span class="text-red-500 text-xs"></span>
-                            </div>
-                        </div>
+                    <form id="login" method="POST" action="/auth/login" class="space-y-6">
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                             <div class="mt-1">
-                                <input id="email" type="email" data-testid="username"
+                                <input id="email" type="text"
                                     class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    name="email" required value="">
+                                    name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
                                 <span class="text-red-500 text-xs"></span>
                             </div>
                         </div>
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                             <div class="mt-1">
-                                <input id="password" required name="password" type="password" data-testid="password"
+                                <input id="password" name="password" type="password" 
+                                    required=""
                                     class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
                                 <span class="text-red-500 text-xs"></span>
                             </div>
                         </div>
                         <div>
-                            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                            <div class="mt-1">
-                                <select id="role" name="role"
-                                    required
-                                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    >
-                                    <option value="patient">Patient</option>
-                                    <option value="doctor">Doctor</option>
-                                </select>
-                                <span class="text-red-500 text-xs"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <button data-testid="login" type="submit"
+                            <button type="submit"
                                 class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-wait disabled:opacity-50">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                     <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
@@ -145,7 +100,7 @@
                                             clip-rule="evenodd"></path>
                                     </svg>
                                 </span>
-                                Sign Up
+                                Sign In
                             </button>
                         </div>
                     </form>
@@ -156,7 +111,7 @@
     <footer class="mt-[100px] bg-black sm:px-[4rem] md:px-[4rem] lg:px-[5rem] pt-[3rem] pb-[1rem]">
         <div class="md:flex md:gap-x-[80px] lg:gap-x-[100px] sm:w-fit mx-auto md:w-full">
             <div class="md:w-[25%]">
-                <h1 class="text-white font-semibold text-xl"><?= $_ENV['APP_NAME'] ?></h1>
+                <h1 class="text-white font-semibold text-xl">LawyerConnect</h1>
                 <p class="text-[#D7D7D7] mt-2 text-xs">Provides expert legal services for individuals and businesses, tailored to meet client needs</p>
             </div>
             <div class="md:w-[75%] grid md:grid-cols-4 gap-y-6 sm:mt-6 md:mt-0">
@@ -188,9 +143,9 @@
             </div>
         </div>
         <hr class="mt-10 mb-4">
-        <p class="text-center text-[#D7D7D7] text-xs">Copyright ©2025. All right reserved</p>
+        <p class="text-center text-[#D7D7D7] text-xs">Copyright ©2024. All right reserved</p>
     </footer>
-    <script src="<?= 'http://'.$_SERVER['HTTP_HOST'].'/assets/js/burger.js' ?>"></script>
-    <script src="<?= 'http://'.$_SERVER['HTTP_HOST'].'/assets/js/register.js' ?>"></script>
+    <script src="<?= 'http://'.$_SERVER['HTTP_HOST'].'/assets/js/burger.js'?>"></script>
+    <script src="<?= 'http://'.$_SERVER['HTTP_HOST'].'/assets/js/login.js'?></script>
 </body>
 </html>

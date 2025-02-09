@@ -52,26 +52,30 @@ class AuthRepository{
     }
 
     public function login(User $user){
-        $query = 'SELECT id, role, password FROM user WHERE email = :email';
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $stmt->execute();
-        $user1 = $stmt->fetch();
-
-        if($user1){
-            //email found
-            if(password_verify($this->password, $user1['password'])){
-                //correct password
-                // $_SESSION['user_id'] = $user1['id'];
-                // $_SESSION['user_role'] = $user1['role'];
-                return ['success' => true, 'user' => $user1];
-            }else{
-                //wrong password
-                return ['success' => false, 'message' => 'Wrong password'];
-            }
-        }else{
-            //email notfound
-            return ['success' => false, 'message' => 'Email not found'];
+        try{
+            $query = 'SELECT id, role, password FROM "user" WHERE email = :email';
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch();
+            // if($user1){
+            //     //email found
+            //     if(password_verify($this->password, $user1['password'])){
+            //         //correct password
+            //         // $_SESSION['user_id'] = $user1['id'];
+            //         // $_SESSION['user_role'] = $user1['role'];
+            //         return ['success' => true, 'user' => $user1];
+            //     }else{
+            //         //wrong password
+            //         return ['success' => false, 'message' => 'Wrong password'];
+            //     }
+            // }else{
+            //     //email notfound
+            //     return ['success' => false, 'message' => 'Email not found'];
+            // }
+        }catch(PDOException $e){
+            Logger::error_log($e->getMessage());
+            return null;
         }
     }
 }

@@ -30,7 +30,13 @@ class AuthController{
         return View::make('auth/login');
     }
 
-    // public function loginGET(){
-    //     return View::make('auth/login');
-    // }
+    public function loginPOST(){
+        $authService = new AuthService();
+        $result = $this->authService->login($_POST);
+        if($result['success'] === true){
+            return View::make('auth/login');
+        }
+
+        return View::make('auth/login', ['errors' => $result['errors']]);
+    }
 }
