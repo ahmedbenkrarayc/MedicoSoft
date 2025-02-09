@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Models;
-use APP\Exceptions\InputException;
+use App\Exceptions\InputException;
 
-abstract class User{
+class User{
     protected $id;
     protected $fname;
     protected $lname;
