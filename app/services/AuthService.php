@@ -86,7 +86,7 @@ class AuthService{
             $result = $this->repository->getUserByEmailOrId($request['email']);
             if($result){
                 //email found
-                if(password_verify('ahmed123', '$2y$10$juDAKBUXF4rtBMScNxGUZuU0jfOdw92Y.orqjl9OawCecOlAeUqBa')){
+                if(password_verify($request['password'], $result['password'])){
                     //correct password
                     $_SESSION['user_id'] = $result['id'];
                     $_SESSION['user_role'] = $result['role'];
@@ -101,5 +101,11 @@ class AuthService{
         }catch(InputException $e){
             return ['success' => false, 'errors' => [$e->getMessage()]];
         }
+    }
+
+    public function logout(){
+        session_unset();
+        session_destroy();
+        header('Location: /');
     }
 }

@@ -21,7 +21,8 @@ $router
     $group->get('/login', [AuthController::class, 'loginGET']);
     $group->post('/login', [AuthController::class, 'loginPOST']);
 
-}, GuestMiddleware::class);
+}, GuestMiddleware::class)
+->post('/logout', [AuthController::class, 'logout']);
 
 try{
     echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));

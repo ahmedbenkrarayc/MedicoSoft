@@ -17,7 +17,6 @@ class AuthController{
     }
 
     public function registerPOST(){
-        $authService = new AuthService();
         $result = $this->authService->register($_POST);
         if($result['success'] === true){
             return View::make('auth/register', ['success' => true]);
@@ -31,12 +30,15 @@ class AuthController{
     }
 
     public function loginPOST(){
-        $authService = new AuthService();
         $result = $this->authService->login($_POST);
         if($result['success'] === true){
             return View::make('auth/login');
         }
 
         return View::make('auth/login', ['errors' => $result['errors']]);
+    }
+
+    public function logout(){
+        $this->authService->logout();
     }
 }
