@@ -6,6 +6,8 @@ require __DIR__.'/../app/config/environment.php';
 use App\Exceptions\RouteNotFoundException;
 use App\Controllers\AuthController;
 use App\Controllers\DoctorController;
+use App\Controllers\PatientController;
+
 use App\Middlewares\GuestMiddleware;
 use App\Middlewares\AuthMiddleware;
 
@@ -19,9 +21,13 @@ $router
     $group->post('/register', [AuthController::class, 'registerPOST']);
     $group->get('/login', [AuthController::class, 'loginGET']);
     $group->post('/login', [AuthController::class, 'loginPOST']);
-
+    
 }, [GuestMiddleware::class])
-->get('/currentUser', [AuthController::class, 'user']);
+->get('/currentUser', [AuthController::class, 'user'])
+->group('/patient', function($group){
+    $group->get('/patient/reservations', [PatientController::class, 'reservations']);
+    $group->post('/patient/cancelreservation', [ReservationController::class, 'cancelReservation']);
+}, [AuthMiddleware::class, 'patient']);
 
 try{
     echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
