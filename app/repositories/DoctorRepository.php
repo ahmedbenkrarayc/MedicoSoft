@@ -41,4 +41,17 @@ class DoctorRepository{
             return [];
         }
     }
+
+    public function doctorById($id){
+        try{
+            $query = 'SELECT u.*, l.* FROM "user" as u, doctor as d WHERE u.id = d.id AND u.id = :id';
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+        }catch(PDOException $e){
+            Logger::error_log($e->getMessage());
+            return null;
+        }
+    }
 }

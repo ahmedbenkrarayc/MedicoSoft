@@ -16,17 +16,18 @@ $router = new Core\Router;
 $router
 ->get('/', [DoctorController::class, 'home'])
 ->get('/doctor/list', [DoctorController::class, 'availableDoctors'])
+->get('/doctor/{id}', [DoctorController::class, 'profile'])
 ->group('/auth', function($group){
     $group->get('/register', [AuthController::class, 'registerGET']);
     $group->post('/register', [AuthController::class, 'registerPOST']);
     $group->get('/login', [AuthController::class, 'loginGET']);
     $group->post('/login', [AuthController::class, 'loginPOST']);
-    
 }, [GuestMiddleware::class])
 ->get('/currentUser', [AuthController::class, 'user'])
 ->group('/patient', function($group){
-    $group->get('/patient/reservations', [PatientController::class, 'reservations']);
-    $group->post('/patient/cancelreservation', [ReservationController::class, 'cancelReservation']);
+    $group->get('/reservations', [PatientController::class, 'reservations']);
+    $group->post('/cancelreservation', [ReservationController::class, 'cancelReservation']);
+    $group->post('/createreservation/{idmedecin}', [ReservationController::class, 'createReservation']);
 }, [AuthMiddleware::class, 'patient']);
 
 try{

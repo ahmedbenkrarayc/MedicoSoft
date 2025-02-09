@@ -19,4 +19,14 @@ class DoctorController{
     public function availableDoctors(){
         return json_encode(['success' => true, 'data' => $this->doctorService->availableDoctors()]);
     }
+
+    public function profile($id){
+        $doctor = $this->doctorService->doctorById($id);
+        if(!$doctor){
+            header('Location: /'); 
+            exit;
+        }
+        
+        return View::make('doctor/profile', ['doctor' => $doctor, 'availability' => $this->doctorService->unavailableDates($id)]);
+    }
 }

@@ -13,7 +13,12 @@ class ReservationController{
     }
 
     public function cancelReservation($id){
-        $this->patientService->updateReservationStatus($id, 'cancelled');
+        $this->reservationService->updateReservationStatus($id, 'cancelled');
+        header('Location: /patient/reservations');
+    }
+
+    public function createReservation($idmedecin){
+        $this->reservationService->createReservation($_POST, $id_medecin);
         header('Location: /patient/reservations');
     }
 }
