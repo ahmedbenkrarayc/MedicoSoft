@@ -77,7 +77,9 @@ class Router{
             }
         }
         if($middleware){
-            call_user_func([new $middleware, 'handle']);
+            $midd = new $middleware[0];
+            $param = $middleware[1] ?? null;
+            call_user_func_array([new $midd, 'handle'], [$param]);
         }
 
         if(is_callable($action))
@@ -97,15 +99,4 @@ class Router{
 
         throw new RouteNotFoundException();
     }
-
-    // public function middleware($class){
-    //     if(class_exists($class)){
-    //         $class = new $class();
-
-    //         if(method_exists($class, 'handle')){
-    //             call_user_func([$class, 'handle']);
-    //             return $this;
-    //         }
-    //     }
-    // }
 }

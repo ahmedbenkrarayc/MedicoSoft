@@ -6,22 +6,21 @@ require __DIR__.'/../app/config/environment.php';
 use App\Exceptions\RouteNotFoundException;
 use App\Controllers\AuthController;
 use App\Middlewares\GuestMiddleware;
+use App\Middlewares\AuthMiddleware;
 
 $router = new Core\Router;
 
 $router
 ->get('/', function(){
     return 'hi';
-})
-// ->get('/test/register', [AuthController::class, 'registerGET'])
-// ->post('/register', [AuthController::class, 'registerPOST']);
+}, [AuthMiddleware::class, 'doctor'])
 ->group('/auth', function($group){
     $group->get('/register', [AuthController::class, 'registerGET']);
     $group->post('/register', [AuthController::class, 'registerPOST']);
     $group->get('/login', [AuthController::class, 'loginGET']);
     $group->post('/login', [AuthController::class, 'loginPOST']);
 
-}, GuestMiddleware::class)
+}, [GuestMiddleware::class])
 ->post('/logout', [AuthController::class, 'logout']);
 
 try{

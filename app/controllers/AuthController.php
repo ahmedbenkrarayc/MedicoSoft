@@ -32,7 +32,8 @@ class AuthController{
     public function loginPOST(){
         $result = $this->authService->login($_POST);
         if($result['success'] === true){
-            return View::make('auth/login');
+            header('Location: /auth/login');
+            exit;
         }
 
         return View::make('auth/login', ['errors' => $result['errors']]);
