@@ -42,4 +42,8 @@ class AuthController{
     public function logout(){
         $this->authService->logout();
     }
+
+    public static function user(){
+        return $this->authService->currentUser();
+    }
 }

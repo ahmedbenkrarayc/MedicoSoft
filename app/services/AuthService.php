@@ -108,4 +108,12 @@ class AuthService{
         session_destroy();
         header('Location: /');
     }
+
+    public function currentUser(){
+        try{
+            return $this->repository->getUserByEmailOrId($_SESSION['user_id']);
+        }catch(\Exception $e){
+            return null;
+        }
+    }
 }
