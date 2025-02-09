@@ -16,7 +16,7 @@ class Router{
         return $this->register('get', $route, $action);
     }
 
-    public function post(){
+    public function post($route, $action){
         return $this->register('post', $route, $action);
     }
 
