@@ -3,7 +3,6 @@
 namespace Core;
 
 class View{
-
     public function __construct(
         private $view,
         private $params
