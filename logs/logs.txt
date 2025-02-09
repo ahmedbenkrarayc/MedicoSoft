@@ -1,0 +1,24 @@
+2025-02-09 00:42:51	SQLSTATE[42601]: Syntax error: 7 ERREUR:  erreur de syntaxe sur ou près de « role »
+LINE 1: ...user"(fname, lname, email, password, photo, phone role) VALU...
+                                                             ^
+2025-02-09 00:44:49	SQLSTATE[42601]: Syntax error: 7 ERREUR:  erreur de syntaxe sur ou près de « role »
+LINE 1: ...user"(fname, lname, email, password, photo, phone role) VALU...
+                                                             ^
+2025-02-09 00:45:22	SQLSTATE[42601]: Syntax error: 7 ERREUR:  erreur de syntaxe sur ou près de « role »
+LINE 1: ... INTO "user"(fname, lname, email, password, phone role) VALU...
+                                                             ^
+2025-02-09 00:49:08	SQLSTATE[42601]: Syntax error: 7 ERREUR:  erreur de syntaxe sur ou près de « role »
+LINE 1: ... INTO "user"(fname, lname, email, password, phone role) VALU...
+                                                             ^
+2025-02-09 00:49:51	SQLSTATE[42601]: Syntax error: 7 ERREUR:  INSERT a plus d'expressions que les colonnes cibles
+LINE 1: ...l, password, phone, role) VALUES($1, $2, $3, $4, $5, $6, $7)
+                                                                    ^
+2025-02-09 00:52:20	SQLSTATE[42601]: Syntax error: 7 ERREUR:  INSERT a plus d'expressions que les colonnes cibles
+LINE 1: ...l, password, phone, role) VALUES($1, $2, $3, $4, $5, $6, $7)
+                                                                    ^
+2025-02-09 00:53:41	SQLSTATE[42601]: Syntax error: 7 ERREUR:  INSERT a plus d'expressions que les colonnes cibles
+LINE 1: ...l, password, phone, role) VALUES($1, $2, $3, $4, $5, $6, $7)
+                                                                    ^
+2025-02-09 00:54:03	SQLSTATE[42601]: Syntax error: 7 ERREUR:  INSERT a plus d'expressions que les colonnes cibles
+LINE 1: ...l, password, phone, role) VALUES($1, $2, $3, $4, $5, $6, $7)
+                                                                    ^
