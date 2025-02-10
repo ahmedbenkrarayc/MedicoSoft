@@ -7,6 +7,8 @@ use App\Exceptions\RouteNotFoundException;
 use App\Controllers\AuthController;
 use App\Controllers\DoctorController;
 use App\Controllers\PatientController;
+use App\Controllers\UnavailableController;
+use App\Controllers\DashboardController;
 
 use App\Middlewares\GuestMiddleware;
 use App\Middlewares\AuthMiddleware;
@@ -19,6 +21,9 @@ $router
 ->get('/doctor/profile/{id}', [DoctorController::class, 'profile'])
 ->get('/doctor/settings', [DoctorController::class, 'editProfile'], [AuthMiddleware::class, 'doctor'])
 ->post('/doctor/updateprofile', [DoctorController::class, 'updateProfile'], [AuthMiddleware::class, 'doctor'])
+->get('/doctor/unavailable', [UnavailableController::class, 'index'], [AuthMiddleware::class, 'doctor'])
+->post('/doctor/unavailable/create', [UnavailableController::class, 'create'], [AuthMiddleware::class, 'doctor'])
+->get('/doctor/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class, 'doctor'])
 ->group('/auth', function($group){
     $group->get('/register', [AuthController::class, 'registerGET']);
     $group->post('/register', [AuthController::class, 'registerPOST']);

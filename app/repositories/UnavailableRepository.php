@@ -27,4 +27,21 @@ class UnavailableRepository{
             return null;
         }
     }
+
+    public function createUnavailable(Unavailable $unavailable){
+        try{
+            $query = 'INSERT INTO unavailable(id_medecin, date_debut, date_fin) VALUES(:medecin, :start, :end)';
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':medecin', $unavailable->getIdMedecin(), PDO::PARAM_INT);
+            $stmt->bindValue(':start', $unavailable->getDateDebut(), PDO::PARAM_STR);
+            $stmt->bindValue(':end', $unavailable->getDateFin(), PDO::PARAM_STR);
+            if($stmt->execute()){
+                return true;
+            }
+            return false;
+        }catch(PDOException $e){
+            Logger::error_log($e->getMessage());
+            return false;
+        }
+    }
 }
