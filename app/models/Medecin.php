@@ -10,7 +10,6 @@ class Medecin extends User {
     private $city;
     private $address;
     private $price;
-    private $errors = [];
 
     public function __construct($id = null, $fname = null, $lname = null, $email = null, $password = null, $phone = null, $photo = null, 
                                 $specialite= null, $experience= null, $biographie= null, $country= null, $city= null, $address= null, $price= null) {

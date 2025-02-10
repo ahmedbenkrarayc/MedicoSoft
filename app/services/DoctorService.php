@@ -49,4 +49,57 @@ class DoctorService{
             return null;
         }
     }
+
+    public function updateDoctor($request){
+        $errors = [];
+        $nullvalue = false;
+        if(!isset($request['speciality']) || empty($request['speciality'])){
+            $errors[] = 'Speciality is required !';
+            $nullvalue = true;
+        }
+
+        if(!isset($request['experience']) || empty($request['experience'])){
+            $errors[] = 'Experience is required !';
+            $nullvalue = true;
+        }
+
+        if(!isset($request['biographie']) || empty($request['biographie'])){
+            $errors[] = 'Bio is required !';
+            $nullvalue = true;
+        }
+
+        if(!isset($request['country']) || empty($request['country'])){
+            $errors[] = 'Country is required !';
+            $nullvalue = true;
+        }
+
+        if(!isset($request['city']) || empty($request['city'])){
+            $errors[] = 'City is required !';
+            $nullvalue = true;
+        }
+
+        if(!isset($request['address']) || empty($request['address'])){
+            $errors[] = 'Address is required !';
+            $nullvalue = true;
+        }
+
+        if(!isset($request['price']) || empty($request['price'])){
+            $errors[] = 'Price is required !';
+            $nullvalue = true;
+        }
+
+        if($nullvalue)
+            return ['success' => false, 'errors' => $errors];
+
+        try{
+            $user = new Medecin($_SESSION['user_id'], null, null, null, null, null, null, $request['speciality'], $request['experience'], $request['biographie'], $request['country'], $request['city'], $request['address'], $request['price']);
+            if($this->repository->updateDoctor($user)){
+                return ['success' => true];
+            }
+
+            return ['success' => false, 'errors' => ['Something went wrong please try again later !']];
+        }catch(InputException $e){
+            return ['success' => false, 'errors' => [$e->getMessage()]];
+        }
+    }
 }
