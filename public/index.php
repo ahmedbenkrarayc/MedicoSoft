@@ -16,7 +16,7 @@ $router = new Core\Router;
 $router
 ->get('/', [DoctorController::class, 'home'])
 ->get('/doctor/list', [DoctorController::class, 'availableDoctors'])
-->get('/doctor/{id}', [DoctorController::class, 'profile'])
+->get('/doctor/profile/{id}', [DoctorController::class, 'profile'])
 ->group('/auth', function($group){
     $group->get('/register', [AuthController::class, 'registerGET']);
     $group->post('/register', [AuthController::class, 'registerPOST']);

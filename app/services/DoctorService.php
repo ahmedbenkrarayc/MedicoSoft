@@ -37,7 +37,7 @@ class DoctorService{
             $result = $this->unavailabileRepository->unavailableDates($id);
             $date_start = '';
             $date_end = '';
-            if($dates){
+            if($result){
                 $date_start = $result['date_debut'];
                 $date_end = $result['date_fin'];
             }
